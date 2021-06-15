@@ -1,0 +1,239 @@
+﻿<UserControl x:Class="CRMAdmin.View.DashboardUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:CRMAdmin.View"
+			 xmlns:vm="clr-namespace:CRMAdmin.ViewModel"
+			 xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+			 xmlns:bi="clr-namespace:CRMAdmin.Behaviors"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+	<UserControl.Resources>
+		<DataTemplate DataType="{x:Type vm:DashboardInfoVM}">
+			<v:DashboardInfoUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AccountVM}">
+			<v:AccountUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:PatientVM}">
+			<v:PatientUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:DoctorVM}">
+			<v:DoctorUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:CabinetVM}">
+			<v:CabinetUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:MedicineVM}">
+			<v:MedicineUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:ProcedureVM}">
+			<v:ProcedureUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:EquipmentVM}">
+			<v:EquipmentUC/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddDoctorVM}">
+			<v:AddDoctorUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:DoctorMoreInfoVM}">
+			<v:DoctorMoreInfoUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddPatientVM}">
+			<v:AddPatientUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:PatientRecordsVM}">
+			<v:PatientRecordsUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddAccountVM}">
+			<v:AddAccountUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AccountMoreInfoVM}">
+			<v:AccountMoreInfoUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddDoctorCategoryVM}">
+			<v:AddDoctorCategory />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:DoctorRecordsVM}">
+			<v:DoctorRecordsUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddEquipmentVM}">
+			<v:AddEquipmentUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddMedicinesVM}">
+			<v:AddMedicinesUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddCabinetVM}">
+			<v:AddCabinetUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:SetDoctorProcedureVM}">
+			<v:SetDoctorProcedureUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:ShowCabinetInfoVM}">
+			<v:ShowCabinetInfoUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:SetDoctorRecordsAnalyseVM}">
+			<v:SetDoctorRecordsAnalyseUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:SetDoctorRecordsDiagnoseVM}">
+			<v:SetDoctorRecordsDiagnoseUC />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:AddDoctorRecordsVM}">
+			<v:AddDoctorRecordsUC />
+		</DataTemplate>
+		<Style x:Key="TransparentStyle" TargetType="{x:Type Button}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border>
+							<Border.Style>
+								<Style TargetType="{x:Type Border}">
+									<Style.Triggers>
+										<Trigger Property="IsMouseOver" Value="True">
+											<Setter Property="Background" Value="#0c111f" />
+										</Trigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
+							<Grid Background="Transparent">
+								<ContentPresenter></ContentPresenter>
+							</Grid>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Resources>
+	<b:Interaction.Behaviors>
+		<bi:HotKeyPressBehavior Command="{Binding HotkeyCommand}"/>
+	</b:Interaction.Behaviors>
+	<Grid Background="#0c111f">
+		<materialDesign:DrawerHost>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="12*"/>
+				</Grid.RowDefinitions>
+
+				<Grid Grid.Row="0" VerticalAlignment="Top" Background="#0e1627">
+					<Button  Padding="0" Height="50" Width="50" x:Name="MenuOpenButton"
+                                Background="{x:Null}" BorderBrush="{x:Null}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                VerticalAlignment="Top" HorizontalAlignment="Left">
+						<materialDesign:PackIcon  Foreground="White" Kind="HamburgerMenu" Height="50" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Button>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Text="CRM Admin" 
+                                    FontFamily="Microsoft YaHei Light"
+                                    FontSize="25" Foreground="White"/>
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+						<Ellipse MinHeight="40" MinWidth="42">
+							<Ellipse.Fill>
+								<ImageBrush ImageSource="{Binding AvatarSource}" />
+							</Ellipse.Fill>
+						</Ellipse>
+						<TextBlock Foreground="White" Text="{Binding Login}" VerticalAlignment="Center"
+                                    FontSize="20" FontFamily="Microsoft YaHei Light"/>
+
+						<materialDesign:PopupBox HorizontalAlignment="Right" Foreground="{StaticResource SecondaryAccentBrush}" VerticalAlignment="Center"
+                                                  Margin="0,0,10,0" PlacementMode="BottomAndAlignRightEdges" 
+                                                  StaysOpen="False" Height="40" Width="40">
+							<StackPanel Width="150"  Background="White">
+								<Button Foreground="#0a043c" Content="Help" FontFamily="Microsoft YaHei" FontSize="15"/>
+								<Separator Background="#0a043c" Margin="5,0,5,0"/>
+								<Button Foreground="#0a043c" Command="{Binding LogoutCommand}"  Content="Logout" FontFamily="Microsoft YaHei" FontSize="15"/>
+							</StackPanel>
+						</materialDesign:PopupBox>
+					</StackPanel>
+				</Grid>
+				<Grid  Grid.Row="1">
+					<ContentControl Content="{Binding CurrentVM}"/>
+				</Grid>
+			</Grid>
+			<materialDesign:DrawerHost.LeftDrawerContent>
+				<Grid Grid.Column="0" HorizontalAlignment="Left" Background="#0e1627">
+					<StackPanel>
+						<Button  Padding="0" Height="50" Width="50"
+                            Background="{x:Null}" BorderBrush="{x:Null}" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            VerticalAlignment="Top" HorizontalAlignment="Left">
+							<materialDesign:PackIcon  Foreground="White" Kind="HamburgerMenuBack" Height="50" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Command="{Binding DashboardCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="ViewDashboard"
+                                                  Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" Width="200" HorizontalAlignment="Stretch" Text="Dashboard" Foreground="White"/>
+							</StackPanel>
+						</Button>
+
+
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Command="{Binding PatientCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="People"
+                                                  Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Patient" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Command="{Binding DoctorCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Doctor"
+                                                   Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Doctor" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left"
+				                Command="{Binding CabinetCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Door"
+                                                 Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Cabinet" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left"
+				                Command="{Binding MedicineCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Medicine"
+                                                 Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Medicine" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left"
+				                Command="{Binding ProcedureCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Notebook"
+                                                 Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Procedure" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}" Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left"
+				                Command="{Binding EquipmentCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Settings"
+                                                 Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Equipment" Foreground="White"/>
+							</StackPanel>
+						</Button>
+						<Button Style="{StaticResource TransparentStyle}"  Height="50" Margin="0,2" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left" Command="{Binding AccountCommand}">
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<materialDesign:PackIcon HorizontalAlignment="Left" Kind="Account"
+                                                  Width="50" Height="35" Foreground="White"/>
+								<TextBlock FontSize="20" FontFamily="Microsoft YaHei Light" 
+                                   Width="200" HorizontalAlignment="Stretch" Text="Account" Foreground="White"/>
+							</StackPanel>
+						</Button>
+					</StackPanel>
+				</Grid>
+			</materialDesign:DrawerHost.LeftDrawerContent>
+		</materialDesign:DrawerHost>
+	</Grid>
+</UserControl>

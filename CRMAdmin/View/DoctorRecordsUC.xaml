@@ -1,0 +1,222 @@
+﻿<UserControl x:Class="CRMAdmin.View.DoctorRecordsUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRMAdmin.View"
+             mc:Ignorable="d" 
+             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+			 xmlns:b="clr-namespace:CRMAdmin.Behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="1000" d:DesignWidth="1230"
+             Background="#0c111f" FontFamily="Microsoft YaHei Light">
+    <UserControl.Resources>
+		<DataTemplate x:Key="PatientItem">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Surname}" Foreground="White"/>
+                <TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Name}" Foreground="White"/>
+            </StackPanel>
+        </DataTemplate>
+		<DataTemplate x:Key="RecordItem">
+			<StackPanel Orientation="Horizontal" >
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Patient.Name}" Foreground="White"/>
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Patient.Surname}" Foreground="White"/>
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Timestamp}" Foreground="White"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="ProcedureItem">
+			<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Name}" Foreground="White"/>
+		</DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="DriveDocument" Margin="40,0,0,0"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                     MinHeight="40" MinWidth="40" Foreground="White"/>
+            <TextBlock  Text="Records List" Margin="10" Foreground="White"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        FontSize="25"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="InformationOutline" Margin="40,0,0,0"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                     MinHeight="40" MinWidth="40" Foreground="White"/>
+            <TextBlock  Text="Information about Records" Margin="10" Foreground="White"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        FontSize="25"/>
+        </StackPanel>
+
+        <Grid Grid.Column="0" Grid.Row="1" Margin="10">
+            <Grid>
+                <Border Grid.Row="1" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                    </Border.Effect>
+                    <Grid Grid.Column="0" Grid.Row="1"  Background="#0e1627">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBox Foreground="White"
+                                         VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                         FontSize="20" Margin="10,0,10,0"
+                                         materialDesign:HintAssist.Hint="Search"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+										 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="KeyUp">
+                                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <materialDesign:PopupBox Grid.Column="1" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom"
+                                                                     PlacementMode="BottomAndAlignRightEdges" 
+                                                                     StaysOpen="False">
+                                    <StackPanel Width="150">
+                                        <Button Command="{Binding AscendSortCommand}" Foreground="White" Content="Acsending datetime" FontFamily="Microsoft YaHei" FontSize="15" />
+										<Button Command="{Binding DescendSortCommand}" Foreground="White" Content="Descending datetime" FontFamily="Microsoft YaHei" FontSize="15"/>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Grid>
+
+							<ListBox Padding="10" ItemTemplate="{StaticResource RecordItem}"
+											    ItemsSource="{Binding Records}"
+									 SelectedItem="{Binding SelectedRecord}"
+                                                Background="#0e1627" Foreground="#14273b"
+                                                HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+						</StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1" Margin="10">
+            <Grid>
+                <Border Grid.Row="1" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                    </Border.Effect>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#0e1627" Foreground="#0e1627" BorderBrush="#0e1627">
+                        <Grid Margin="20" Grid.Column="0" Grid.Row="1"  Background="#0e1627">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="10*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Records Form" Foreground="White"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="30" FontFamily="Microsoft YaHei Bold"/>
+                            </StackPanel>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="7*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Procedure" Foreground="White"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               FontSize="25" FontFamily="Microsoft YaHei"/>
+                                    <StackPanel Grid.Row="1">
+                                        <ComboBox Grid.Row="1" materialDesign:HintAssist.Hint="Procedure Name"
+                                              FontSize="20" Foreground="White" ItemTemplate="{StaticResource ProcedureItem}" ItemsSource="{Binding Procedures}" SelectedItem="{Binding SelectedRecord.Procedure}" />
+                                        <ComboBox Margin="0 10 0 0" Grid.Row="1" materialDesign:HintAssist.Hint="Patient"
+                                              FontSize="20" Foreground="White" ItemTemplate="{StaticResource PatientItem}" ItemsSource="{Binding Patients}" SelectedItem="{Binding SelectedRecord.Patient}"/>
+                                    </StackPanel>
+                                    
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Procedure Result" Foreground="White"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               FontFamily="Microsoft YaHei" FontSize="25"/>
+                                    <StackPanel Grid.Row="1">
+                                   
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="90">
+                                            <TextBox materialDesign:HintAssist.Hint="Recipe"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                     FontSize="20" Foreground="White"
+                                                     TextWrapping="Wrap" Text="{Binding SelectedRecord.ProcedureResult.Recipe}"/>
+                                        </ScrollViewer>
+										<DatePicker Margin="0 15 0 0" FontSize="20" Foreground="White" materialDesign:HintAssist.Hint="Begin" SelectedDate="{Binding SelectedRecord.ProcedureResult.ProcudureTimestampBegin, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                            
+                                        </DatePicker>
+
+										<DatePicker Margin="0 15 0 0" FontSize="20" Foreground="White" materialDesign:HintAssist.Hint="End" SelectedDate="{Binding SelectedRecord.ProcedureResult.ProcudureTimestampEnd, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+
+                                        </DatePicker>
+                                        <Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="2*"/>
+												<ColumnDefinition Width="4*"/>
+											</Grid.ColumnDefinitions>
+										</Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Padding="0" Margin="10,0,10,0" MinHeight="40"
+                    Command="{Binding AddCommand}" Background="#4d8af0">
+                <TextBlock Foreground="White" FontSize="20" Text="Add"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+
+            <Button Grid.Column="1" Padding="0" Margin="10,0,10,0" MinHeight="40"
+                    Command="{Binding SaveCommand}" Background="#4d8af0">
+                <TextBlock Foreground="White" FontSize="20" Text="Save"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Button>
+
+            <Button Grid.Column="2" Padding="0" Margin="10,0,10,0" MinHeight="40"
+                    Command="{Binding DiagnoseCommand}" Background="#4d8af0">
+                <TextBlock Foreground="White" FontSize="20" Text="Diagnose"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Button>
+
+			<Button Grid.Column="3" Padding="0" Margin="10,0,10,0" MinHeight="40"
+                    Command="{Binding AnalCommand}" Background="#4d8af0">
+				<TextBlock Foreground="White" FontSize="20" Text="Analyse"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+			</Button>
+			<Button Grid.Column="4" Padding="0" Margin="10,0,10,0" MinHeight="40"
+                    Command="{Binding BackCommand}" Background="#4d8af0">
+                <TextBlock Foreground="White" FontSize="20" Text="Back"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

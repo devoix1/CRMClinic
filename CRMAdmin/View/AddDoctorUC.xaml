@@ -1,0 +1,309 @@
+﻿<UserControl x:Class="CRMAdmin.View.AddDoctorUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRMAdmin.View"
+             mc:Ignorable="d" 
+             xmlns:b ="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="1200" d:DesignWidth="1230"
+             Background="#c4fff8" FontFamily="Microsoft YaHei Light">
+	<UserControl.Resources>
+		<DataTemplate x:Key="CategoryItem">
+			<TextBlock FontFamily="Micrisift YaHei Light" FontSize="20" Text="{Binding Value}"/>
+		</DataTemplate>
+		<DataTemplate x:Key="CabinetItem">
+			<TextBlock FontFamily="Micrisift YaHei Light" FontSize="20" Text="{Binding Number}"/>
+		</DataTemplate>
+		<DataTemplate x:Key="GenderItem">
+			<TextBlock FontFamily="Micrisift YaHei Light" FontSize="20" Text="{Binding}"/>
+		</DataTemplate>
+        <DataTemplate x:Key="ProcedureItem">
+			<CheckBox>
+				<TextBlock Text="{Binding Name}" Foreground="White" FontSize="20"/>
+			</CheckBox>
+        </DataTemplate>
+	</UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#0e1627" Foreground="#0e1627" BorderBrush="#0e1627">
+		<Grid Background="#0c111f">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="2*"/>
+			</Grid.RowDefinitions>
+				<Border Margin="30" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+					<Border.Effect>
+						<DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+					</Border.Effect>
+					<Grid Background="#0e1627">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="3*"/>
+							<RowDefinition Height="3*"/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Text="Personal Information" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="30" FontFamily="Microsoft YaHei"/>
+						<Grid Grid.Row="1" Margin="10">
+							<StackPanel Margin="0,0,20,0" Grid.Column="1">
+                            <TextBox  FontSize="20" Foreground="White" Text="{Binding NewDoctor.Surname, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                      materialDesign:HintAssist.Hint="Surname"
+                                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                            <TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding NewDoctor.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Name"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                            <TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding NewDoctor.Middlename, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Middlename"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+							</StackPanel>
+						</Grid>
+						<Grid Grid.Row="2" Margin="10">
+							<StackPanel Margin="0,0,20,0" Grid.Column="1">
+                            <TextBox FontSize="20" Foreground="White" Text="{Binding NewDoctor.Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Email"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                            <TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding NewDoctor.Phone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Phone Number"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                            <TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding NewDoctor.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Adress"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                            <DatePicker Margin="0,10,0,0" materialDesign:HintAssist.Hint="Birthdate" Foreground="White" FontSize="20" SelectedDate="{Binding NewDoctor.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+
+
+                            <ComboBox Margin="0,10,0,0" Foreground="White" FontSize="20" materialDesign:HintAssist.Hint="Gender" ItemsSource="{Binding Genders}" ItemTemplate="{StaticResource GenderItem}" SelectedItem="{Binding NewDoctor.Gender, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" />
+							</StackPanel>
+						</Grid>
+					</Grid>
+				</Border>
+
+                <Border Grid.Row="0" Grid.Column="1" Margin="30" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+					<Border.Effect>
+						<DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+					</Border.Effect>
+					<Grid  Background="#0e1627">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="7*"/>
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Row="0" Text="Workplace Information" Foreground="White"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           FontSize="30" FontFamily="Microsoft YaHei"/>
+                    <StackPanel Grid.Row="1">
+                        <Grid  Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <Label Grid.Column="0" Grid.Row="0" FontSize="20"  Content="Categoty:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <Label Grid.Column="0" Grid.Row="2" FontSize="20"  Content="Cabinet:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,20,10,0"/>
+                                <Label Grid.Column="0" Grid.Row="4" FontSize="20"  Content="Interest rate:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,20,10,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <ComboBox Foreground="White" Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CategoryItem}" SelectedItem="{Binding NewDoctor.Category, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" materialDesign:HintAssist.Hint="Category" FontSize="20" />
+                                <ComboBox Foreground="White" SelectedValuePath="Content" Grid.Column="1" Grid.Row="2" Margin="0,20,0,0" ItemsSource="{Binding Cabinets}" ItemTemplate="{StaticResource CabinetItem}" materialDesign:HintAssist.Hint="Cabinet" FontSize="20" SelectedItem="{Binding NewDoctor.Cabinet, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" VerticalAlignment="Stretch"/>
+                                <TextBox Grid.Column="1" Grid.Row="4" Margin="0,20,200,0" FontSize="20" Foreground="White" Text="{Binding NewDoctor.InterestRate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+                            </StackPanel>
+                        </Grid>
+                        <Button Grid.Column="0"  Command="{Binding SetProcedureCommand}"
+                                        VerticalAlignment="Center" Background="#4d8af0"  Margin="150 20 150 0">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                       Foreground="White" FontSize="20" Text="Set Procedure" />
+                        </Button>
+                    </StackPanel>
+						
+					</Grid>
+				</Border>
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="30" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+					<Border.Effect>
+						<DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+					</Border.Effect>
+					<Grid   Background="#0e1627">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4*"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="4*"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<Grid Grid.Row="0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="2*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Grid.Column="1" Text="Schedule" Foreground="White"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           FontSize="35" FontFamily="Microsoft YaHei"/>
+						</Grid>
+						<Grid Grid.Row="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<Grid Grid.Column="0">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="4*"/>
+								</Grid.RowDefinitions>
+								<Label HorizontalAlignment="Center" Content="Daily schedule by the hour:" FontSize="25" Foreground="White"/>
+								<Grid Grid.Row="1">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+									</Grid.RowDefinitions>
+									<Grid Margin="5" Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Left" Margin="56,0,0,0" Content="From:" FontSize="20"/>
+									<materialDesign:TimePicker Foreground="White" FontSize="20" Grid.Column="1" Margin="0,0,30,0" SelectedTime="{Binding NewDoctor.ScheduleDailyBegin, UpdateSourceTrigger=PropertyChanged}" />
+									</Grid>
+									<Grid Margin="5" Grid.Row="3">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Content="To:" FontSize="20"/>
+									<materialDesign:TimePicker Foreground="White" FontSize="20" Grid.Column="1" Margin="0,0,30,0" SelectedTime="{Binding NewDoctor.ScheduleDailyEnd, UpdateSourceTrigger=PropertyChanged}"/>
+									</Grid>
+								</Grid>
+							</Grid>
+							<Grid Grid.Column="1">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="4*"/>
+								</Grid.RowDefinitions>
+								<Label HorizontalAlignment="Center" Content="Weekly schedule by day:" FontSize="25" Foreground="White"/>
+								<Grid Grid.Row="1">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+									</Grid.RowDefinitions>
+									<Grid Margin="5" Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Content="From:" Foreground="White" FontSize="20"/>
+                                    <DatePicker FontSize="20" Foreground="White" Grid.Column="1" Margin="0,0,30,0" SelectedDate="{Binding NewDoctor.ScheduleWeeklyBegin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+									</Grid>
+									<Grid Margin="5" Grid.Row="3">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Content="To:" FontSize="20" Foreground="White"/>
+                                    <DatePicker FontSize="20" Foreground="White" Grid.Column="1" Margin="0,0,30,0" SelectedDate="{Binding NewDoctor.ScheduleWeeklyEnd, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+									</Grid>
+								</Grid>
+							</Grid>
+							<Grid Grid.Column="2">
+								<Grid.RowDefinitions>
+									<RowDefinition Height="*"/>
+									<RowDefinition Height="4*"/>
+								</Grid.RowDefinitions>
+								<Label HorizontalAlignment="Center" Content="Rest days:" FontSize="25" Foreground="White"/>
+								<Grid Grid.Row="1">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="2*"/>
+									</Grid.RowDefinitions>
+									<Grid Margin="5" Grid.Row="1">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Content="From:" FontSize="20" Foreground="White"/>
+									<DatePicker FontSize="20" Foreground="White" Grid.Column="1" Margin="0,0,30,0" SelectedDate="{Binding NewDoctor.ScheduleRestBegin, UpdateSourceTrigger=PropertyChanged }"/>
+									</Grid>
+									<Grid Margin="5" Grid.Row="3">
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="2*"/>
+										</Grid.ColumnDefinitions>
+										<Label VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" Content="To:" FontSize="20" Foreground="White"/>
+									<DatePicker FontSize="20" Foreground="White" Grid.Column="1" Margin="0,0,30,0" SelectedDate="{Binding NewDoctor.ScheduleRestEnd, UpdateSourceTrigger=PropertyChanged}"/>
+									</Grid>
+								</Grid>
+							</Grid>
+						</Grid>
+						<Grid Grid.Row="3">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="2*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+							<TextBlock Foreground="White" Grid.Column="1" Text="Login Information"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="35" FontFamily="Microsoft YaHei" />
+						</Grid>
+						<Grid Grid.Row="4">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*"/>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<Grid Margin="20" Grid.Row="0">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="3*"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
+                            <TextBox  Grid.Column="1" FontSize="20" Text="{Binding NewAccount.Login, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                                  materialDesign:HintAssist.Hint="username" Foreground="White"
+                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+							</Grid>
+							<Grid Margin="20" Grid.Row="1">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*"/>
+									<ColumnDefinition Width="3*"/>
+									<ColumnDefinition Width="*"/>
+								</Grid.ColumnDefinitions>
+                            <TextBox  Grid.Column="1" FontSize="20" Text="{Binding NewAccount.Password, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                                  materialDesign:HintAssist.Hint="password" Foreground="White"
+                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+							</Grid>
+						</Grid>
+						<Grid Grid.Row="5">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+							</Grid.ColumnDefinitions>
+                            <Button Grid.Column="1" Padding="0" Margin="80,0,50,0" MinHeight="40" 
+                                Command="{Binding AddCommand}" Background="#4d8af0">
+								<TextBlock Foreground="White" FontSize="20" Text="Add"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+							</Button>
+                            <Button Grid.Column="2" Padding="0" Margin="50,0,80,0" MinHeight="40" 
+                                Command="{Binding BackCommand}" Background="#4d8af0">
+								<TextBlock  Foreground="White" FontSize="20" Text="Back"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+							</Button>
+						</Grid>
+					</Grid>
+				</Border>
+		</Grid>
+	</ScrollViewer>
+</UserControl>

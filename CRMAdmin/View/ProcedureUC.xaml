@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="CRMAdmin.View.ProcedureUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRMAdmin.View"
+             mc:Ignorable="d" 
+             xmlns:b ="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="1000" d:DesignWidth="1230"
+             Background="#0c111f" FontFamily="Microsoft YaHei Light">
+    <UserControl.Resources>
+        <DataTemplate x:Key="CategoryItem">
+            <TextBlock FontFamily="Micrisift YaHei Light" FontSize="20" Text="{Binding}" Foreground="White"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Background="#0c111f">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" Margin="10" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+            </Border.Effect>
+            <Grid  Background="#0e1627" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="9*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Add procedure" Foreground="White"
+                           FontSize="25" FontFamily="Microsoft YaHei"
+                           Margin="0,0,0,0"  HorizontalAlignment="Center"/>
+                <Grid  VerticalAlignment="Top" Grid.Row="1">
+					<StackPanel>
+
+						<Grid Margin="20">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="3.6*"/>
+							</Grid.ColumnDefinitions>
+							<Label FontSize="20" Content="Name" HorizontalAlignment="Right" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBox Grid.Column="1"  FontSize="20" VerticalAlignment="Top" Text="{Binding Procedure.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Foreground="White"/>
+						</Grid>
+						<Grid Margin="20">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="3.6*"/>
+							</Grid.ColumnDefinitions>
+							<Label FontSize="20" Content="Description" HorizontalAlignment="Right" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBox Grid.Column="1"  FontSize="20" VerticalAlignment="Top" Text="{Binding Procedure.Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Foreground="White"/>
+
+						</Grid>
+						<Grid Margin="20">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="2.5*"/>
+							</Grid.ColumnDefinitions>
+							<Label FontSize="20" Content="Price" HorizontalAlignment="Right" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBox Grid.Column="1"  FontSize="20" VerticalAlignment="Top" Text="{Binding Procedure.Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Foreground="White"/>
+						</Grid>
+						<Grid Margin="20">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="2.5*"/>
+							</Grid.ColumnDefinitions>
+							<Label FontSize="20" Content="Duration" HorizontalAlignment="Right" Margin="0,0,10,0" Foreground="White"/>
+                            <TextBox Grid.Column="1"  FontSize="20" VerticalAlignment="Top" Text="{Binding Procedure.Duration, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Foreground="White"/>
+						</Grid>
+					</StackPanel>
+				</Grid>
+                <Grid Grid.Row="2" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1"  Command="{Binding AddProcedureCommand}"
+                                    VerticalAlignment="Center" Background="#4d8af0" MinWidth="200" MinHeight="40">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               Foreground="White" FontSize="20" Text="Add"/>
+                    </Button>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,287 @@
+﻿<UserControl x:Class="CRMAdmin.View.DoctorUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:CRMAdmin.View"
+             xmlns:vm="clr-namespace:CRMAdmin.ViewModel"
+             mc:Ignorable="d" 
+             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+			 xmlns:b="clr-namespace:CRMAdmin.Behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="670" d:DesignWidth="1230"
+             Background="#c4fff8" FontFamily="Microsoft YaHei Light">
+	<UserControl.Resources>
+		<DataTemplate x:Key="DoctorItem">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Name}" Foreground="White"/>
+                <TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Surname}" Foreground="White"/>
+			</StackPanel>
+        </DataTemplate>
+		<DataTemplate x:Key="CategoryItem">
+            <TextBlock FontFamily="Microsoft YaHei Light" FontSize="20" Text="{Binding Value}" Foreground="White"/>
+        </DataTemplate>
+		<DataTemplate x:Key="CabinetItem">
+            <TextBlock FontFamily="Microsoft YaHei Light" Margin="0,5" FontSize="20" Text="{Binding Number}" Foreground="White"/>
+        </DataTemplate>
+		<DataTemplate x:Key="GenderItem">
+            <TextBlock FontFamily="Microsoft YaHei Light" Margin="0,5" FontSize="20" Text="{Binding}" Foreground="White"/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Background="#0c111f">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" Foreground="#0e1627" BorderBrush="#0e1627">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Doctor" Margin="40,0,0,0"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                    MinHeight="40" MinWidth="40" Foreground="White"/>
+                            <TextBlock  Text="Doctor List" Margin="10" Foreground="White"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        FontSize="25"/>
+                        </StackPanel>
+
+                        <StackPanel HorizontalAlignment="Center" Grid.Column="1"  Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="InformationCircleOutline"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                     MinHeight="40" MinWidth="40" Foreground="White"/>
+                            <TextBlock Text="Information about doctor and modification" Margin="10" Foreground="White"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                                       FontSize="25"/>
+                        </StackPanel>
+                    
+                    <Grid Grid.Column="0" Grid.Row="1" Margin="10">
+                        <Grid>
+                            <Border Grid.Row="1" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                                </Border.Effect>
+                                <Grid Grid.Column="0" Grid.Row="1"  Background="#0e1627">
+                                    <StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="5*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+											<TextBox    Foreground="White"
+                                                        VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                                        FontSize="20" Margin="10,0,10,0"
+                                                        materialDesign:HintAssist.Hint="Search by name, surname..."
+                                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+												        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+												<i:Interaction.Triggers>
+													<i:EventTrigger EventName="KeyUp">
+														<i:InvokeCommandAction Command="{Binding SearchCommand}" />
+													</i:EventTrigger>
+												</i:Interaction.Triggers>
+											</TextBox>
+											<materialDesign:PopupBox Grid.Column="1" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom"
+                                                                     PlacementMode="BottomAndAlignRightEdges" 
+                                                                     StaysOpen="False">
+												<StackPanel Width="150">
+													<Button Command="{Binding AscendSortCommand}" Foreground="White" Content="A-Z" FontFamily="Microsoft YaHei" FontSize="15" />
+													<Button Command="{Binding DescendSortCommand}" Foreground="White" Content="Z-A" FontFamily="Microsoft YaHei" FontSize="15"/>
+                                                     </StackPanel>
+                                                </materialDesign:PopupBox>
+                                        </Grid>
+
+									<ListBox Padding="10" ItemTemplate="{StaticResource DoctorItem}"
+											    ItemsSource="{Binding Doctors, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+											 SelectedItem="{Binding SelectedDoctor}"
+                                                Background="#0e1627" Foreground="#14273b"
+                                                HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+								</StackPanel>
+                                    </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                    <Grid  Margin="10"  Grid.Column="1" Grid.Row="1" >
+                        <Border Grid.Row="1" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                            </Border.Effect>
+                            <Grid  Background="#0e1627">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="3*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Foreground="White" Text="Personal Information"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           FontSize="30" FontFamily="Microsoft YaHei"/>
+                                    <Button Grid.Column="0" Command="{Binding AddDoctorCategoryCommand}"
+                                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                                            Padding="0" Margin="0,0,0,0"
+                                            Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <materialDesign:PackIcon  Kind="CategoryOutline" Foreground="White"
+                                                                  Height="30" Width="30"/>
+                                    </Button>
+                                    <Button Grid.Column="3" 
+                                            HorizontalAlignment="Right" VerticalAlignment="Center"
+                                            Padding="0" Margin="0,0,0,0"
+                                            Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding RollbackCommand}">
+                                        <materialDesign:PackIcon  Kind="Refresh" Foreground="White"
+                                                                  Height="30" Width="30"/>
+                                    </Button>
+                                </Grid>
+                                
+                                
+                                <Grid Margin="10" Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBox  FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                      materialDesign:HintAssist.Hint="Surname"
+                                                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="0,5,0,0" FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Name"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+									<TextBox Margin="0,5,0,0" FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Middlename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Middlename"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+									<DatePicker Margin="0,5,0,0" materialDesign:HintAssist.Hint="Birthdate" Foreground="White" FontSize="20" SelectedDate="{Binding SelectedDoctor.BirthDate}"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel  Grid.Column="2">
+									<TextBox FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Email"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Phone Number"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="0,10,0,0" FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                     materialDesign:HintAssist.Hint="Adress"
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+									<ComboBox Foreground="White" Margin="0,15,0,0" FontSize="20" materialDesign:HintAssist.Hint="Gender" ItemsSource="{Binding Genders}" ItemTemplate="{StaticResource GenderItem}" SelectedItem="{Binding SelectedDoctor.Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <TextBlock Grid.Row="2" Foreground="White" Text="Workplace Information"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           FontSize="30" FontFamily="Microsoft YaHei"/>
+                                <Grid Margin="15" Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="*"/>
+										<RowDefinition Height="*"/>
+									</Grid.RowDefinitions>
+									<Label Grid.Column="0" Grid.Row="0" FontSize="20"  Content="Categoty:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <Label Grid.Column="0" Grid.Row="1" FontSize="20"  Content="Cabinet:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                    <Label Grid.Column="0" Grid.Row="2" FontSize="20"  Content="Interest rate:" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <ComboBox Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="0" Foreground="White"
+                                                  Margin="0,5" ItemsSource="{Binding Categories}" ItemTemplate="{StaticResource CategoryItem}" SelectedItem="{Binding SelectedDoctor.Category}"
+                                                  materialDesign:HintAssist.Hint="Category" FontSize="20" />
+                                    <ComboBox Padding="0,5,0,0" Grid.Column="1" Grid.Row="1"  Foreground="White"
+                                                  ItemsSource="{Binding Cabinets}" 
+                                                  ItemTemplate="{StaticResource CabinetItem}" 
+                                                  materialDesign:HintAssist.Hint="Cabinet" 
+                                                  FontSize="20" SelectedItem="{Binding SelectedDoctor.Cabinet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" 
+                                                  HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="0,5"/>
+                                    <TextBox Grid.Column="1" Grid.Row="2"  
+                                                 HorizontalAlignment="Stretch"  
+                                                 FontSize="20" Foreground="White" Text="{Binding SelectedDoctor.InterestRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" Margin="0,10,250,0"/>
+                                    <Button Padding="0" Grid.Row="2" Grid.Column="2" Style="{StaticResource MaterialDesignToolButton}">
+                                </Button>
+                                </Grid>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Grid  Margin="0 20 0 20" Grid.Column="1" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0"  Padding="0" Margin="25,0,25,0" Foreground="White"
+                                        Command="{Binding RecordsCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Records"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+
+                        <Button Grid.Column="1" Padding="0" Margin="25,0,25,0"
+                                        Command="{Binding AddCommand}" Background="#4d8af0">
+
+                            <TextBlock Grid.Column="1" Foreground="White" FontSize="20" Text="Add"
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+
+                        <Button Grid.Column="2" Padding="0" Margin="25,0,25,0"
+                                        Command="{Binding SaveCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Save"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+
+                        <Button Grid.Column="3" Padding="0" Margin="25,0,25,0"
+                                        Command="{Binding RemoveCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Remove"
+                                                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                        </Button>
+                        <Button Grid.Column="4" Padding="0" Margin="25,0,25,0"
+                                        Command="{Binding MoreInfoCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="More info"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+                        <!--Засунь её в другое место (например под список докторов). Она обновляет список докторов. Т.к из другой приложухи доктор может сам зарегаться. А тут уже по новой читать файл надо-->
+                        <!--<materialDesign:TransitioningContent  OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.5}">
+                                    <Button Padding="0" Margin="2,0,30,0" Width="150" Height="50"
+                                            Command="{Binding RefreshCommand}" Background="#0a043c">
+                                        <StackPanel Orientation="Horizontal" Width="135" >
+                                            <materialDesign:PackIcon Width="25" Height="25" Foreground="White"
+                                                             Kind="Refresh" VerticalAlignment="Center"
+                                                             Margin="0,0,5,0"/>
+                                            <TextBlock Foreground="White" FontSize="24" Text="Refresh"
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </materialDesign:TransitioningContent>-->
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+</UserControl>

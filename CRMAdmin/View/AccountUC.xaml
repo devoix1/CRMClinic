@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="CRMAdmin.View.AccountUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRMAdmin.View"
+             mc:Ignorable="d" 
+             xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
+			 xmlns:b="clr-namespace:CRMAdmin.Behaviors"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             d:DesignHeight="1000" d:DesignWidth="1230"
+             Background="#c4fff8" FontFamily="Microsoft YaHei Light">
+    <UserControl.Resources>
+		<DataTemplate x:Key="AdminItem">
+            <StackPanel Orientation="Horizontal">
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Name}" Foreground="White"/>
+				<TextBlock FontSize="20" Margin="0,0,10,0" Text="{Binding Surname}" Foreground="White"/>
+			</StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+        <Grid>
+            <ScrollViewer Background="#0e1627" Foreground="#0e1627" BorderBrush="#0e1627" Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                <Grid Background="#0c111f">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="12*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+						<StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="People" Margin="40,0,0,0"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                     MinHeight="40" MinWidth="40" Foreground="White"/>
+                            <TextBlock  Text="Account List" Margin="10" Foreground="White"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left"
+                                        FontSize="25"/>
+						</StackPanel>
+
+						<StackPanel HorizontalAlignment="Center" Grid.Column="1"  Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="InformationCircleOutline"
+                                                     VerticalAlignment="Center" HorizontalAlignment="Left"
+                                                     MinHeight="40" MinWidth="40" Foreground="White"/>
+                            <TextBlock Text="Information about account and modification" Margin="10" Foreground="White"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                                       FontSize="25"/>
+                        </StackPanel>
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <Grid>
+                            <Border  Margin="10" CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                                <Border.Effect>
+                                    <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                                </Border.Effect>
+                                <Grid Grid.Column="0" Grid.Row="1" Background="#0e1627" >
+                                    <StackPanel>
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="5*"/>
+												<ColumnDefinition Width="*"/>
+											</Grid.ColumnDefinitions>
+											<TextBox VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                                     FontSize="20" Margin="10,0,10,0" Foreground="White"
+                                                     materialDesign:HintAssist.Hint="Search by name, surname..."
+                                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+												<i:Interaction.Triggers>
+													<i:EventTrigger EventName="KeyUp">
+														<i:InvokeCommandAction Command="{Binding SearchCommand}" />
+													</i:EventTrigger>
+												</i:Interaction.Triggers>
+											</TextBox>
+											<materialDesign:PopupBox Grid.Column="1" HorizontalAlignment="Center" Foreground="White" VerticalAlignment="Bottom"
+                                                                     PlacementMode="BottomAndAlignRightEdges" 
+                                                                     StaysOpen="False">
+												<StackPanel Width="150">
+													<Button Command="{Binding AscendSortCommand}" Foreground="White" Content="A-Z" FontFamily="Microsoft YaHei" FontSize="15"/>
+													<Button Command="{Binding DescendSortCommand}" Foreground="White" Content="Z-A" FontFamily="Microsoft YaHei" FontSize="15"/>
+												</StackPanel>
+											</materialDesign:PopupBox>
+										</Grid>
+									<ListBox Padding="10" ItemTemplate="{StaticResource AdminItem}"
+											     ItemsSource="{Binding Admins}"
+                                                 Background="#0e1627" Foreground="#14273b"
+                                                 HorizontalAlignment="Center" VerticalAlignment="Top" SelectedItem="{Binding SelectedAdmin}"/>
+
+
+								</StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                    <Grid  Margin="10"  Grid.Column="1" Grid.Row="1">
+                        <Border   CornerRadius="10" BorderThickness="5" BorderBrush="#0e1627">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.3" Color="Black" BlurRadius="10"/>
+                            </Border.Effect>
+                            <Grid  Background="#0e1627">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="8*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Personal Information" Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           FontSize="30" FontFamily="Microsoft YaHei"/>
+                                <Grid Grid.Row="1" Margin="10">
+                                    <StackPanel Margin="0,0,20,0" Grid.Column="1">
+									<StackPanel Margin="10">
+										<Grid MinHeight="60">
+											<Button Content="Change/Load Avatar" Foreground="White" Padding="0"
+                                                        MinHeight="50" MinWidth="150" Background="#4d8af0"
+                                                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                        FontSize="20" Command="{Binding UploadPhotoCommand}"/>
+										</Grid>
+									</StackPanel>
+									<TextBox  FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Surname, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                              materialDesign:HintAssist.Hint="Surname" Margin="30,10,100,0"
+                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="30,10,100,0" FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                 materialDesign:HintAssist.Hint="Name"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+									<TextBox Margin="30,10,100,0" FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Middlename, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                 materialDesign:HintAssist.Hint="Middlename"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+									<TextBox FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                 materialDesign:HintAssist.Hint="Email" Margin="30,10,100,0"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="30,10,100,0" FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Phone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                 materialDesign:HintAssist.Hint="Phone Number"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<TextBox Margin="30,10,100,0" FontSize="20" Foreground="White" Text="{Binding SelectedAdmin.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                                                 materialDesign:HintAssist.Hint="Address"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+									<DatePicker Margin="30,10,400,0" materialDesign:HintAssist.Hint="Birthdate" Foreground="White" FontSize="20" SelectedDate="{Binding SelectedAdmin.BirthDate, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+
+									<ComboBox Foreground="White" Margin="30,10,600,0" FontSize="20" materialDesign:HintAssist.Hint="Gender" ItemsSource="{Binding Genders}" SelectedItem="{Binding SelectedAdmin.Gender, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <Grid  Margin="10,10" Grid.Column="1"  Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Padding="0" Margin="25,0,25,0" MinHeight="40"
+                                    Command="{Binding AddCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Add"
+                                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+
+                        <Button Grid.Column="1" Padding="0" Margin="25,0,25,0" MinHeight="40"
+                                    Command="{Binding SaveCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Save"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+
+                        <Button Grid.Column="2" Padding="0" Margin="25,0,25,0" MinHeight="40"
+                                    Command="{Binding RemoveCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="Remove"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                        </Button>
+                        <Button Grid.Column="3" Padding="0" Margin="25,0,25,0" MinHeight="40"
+                                    Command="{Binding MoreInfoCommand}" Background="#4d8af0">
+
+                            <TextBlock Foreground="White" FontSize="20" Text="More info"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+</UserControl>
